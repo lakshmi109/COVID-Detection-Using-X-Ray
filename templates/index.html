@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <title>COVID-19 Prediction</title>
+</head>
+<body class="bg-gradient-to-b from-[#2b2423] via-violet-950 to-blue-950 ... h-full">
+    <h1 class="text-center text-white font-extarabold text-[60px] w-[100vw] pt-6">COVID Detection using X-Ray Images.</h1>
+    <div class=" flex w-full ">
+        <div class="p-10 flex flex-col w-[50vw]">
+            <h1 class=" text-white font-bold text-[30px]">Motivation</h1>
+            <p class="text-slate-300">Thousands of individuals have died as a result of the coronavirus epidemic, which has afflicted millions of people around the world. Any technical device that allows for rapid and accurate COVID-19 infection detection can be extremely beneficial to healthcare providers.</p>
+            <img src="\static\virus.png" alt="virus" class="self-center ">
+        </div>
+        <div class="p-10">
+            <form method="post" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+    
+                {% for error in form.photo.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+    
+                <div class="flex flex-col justify-center items-center">
+                    <div>
+                        {{ form.photo(class="form-control text-white") }}
+                    </div>
+                    <div>
+                        {{ form.submit(class="btn text-white m-8 text-[30px] border-zinc-100 hover:scale-105 hover:cursor-pointer ") }}
+                    </div>
+                </div>
+    
+            </form>
+    
+            {% if file_url %}
+                <div class="flex justify-center flex-col items-center">
+                    <img 
+                        src="{{ file_url }}" 
+                        alt="image" 
+                        style="width: 400px;">
+                    {% if prediction %}
+                        <p class="text-[25px] mt-6 text-white">The model predicts that the person <span class="text-red-600 text-[25px] mt-6">has COVID-19</span></p>
+                    {% endif %}
+                    {% if prediction == 0 %} 
+                        <p class="text-[25px] mt-6 text-white">The model predicts that the person <span class="text-green-500 text-[25px] mt-6">does not have COVID-19 </span></p>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="w-[33vw] p-10">
+            <h1 class="text-white font-bold text-[30px]">How the model works.</h1>
+            <p class="text-slate-300">
+                The model is a convolutional neural network that has been trained on a dataset of chest x-ray images. The model has been trained to classify the images into two classes: COVID-19 and non-COVID-19. The model has achieved an accuracy of nearly 98% on the test set.
+            </p>
+        </div>
+        
+    </div>
+    
+</body>
+</html>
